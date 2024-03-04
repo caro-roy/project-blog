@@ -11,8 +11,8 @@ import styles from './postSlug.module.css'
 async function BlogPost({ params }) {
   const { postSlug } = params
 
-  const blogPath = path.resolve('./content/', `${postSlug}.mdx`)
-  const rawPost = await fs.readFile(blogPath, 'utf8')
+  const postPath = path.resolve('./content/', `${postSlug}.mdx`)
+  const rawPost = await fs.readFile(postPath, 'utf8')
 
   const {
     content,
