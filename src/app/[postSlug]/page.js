@@ -1,26 +1,33 @@
-import React from 'react';
+import { compileMDX } from 'next-mdx-remote/rsc'
 
-import BlogHero from '@/components/BlogHero';
+import fs from 'fs/promises'
+const path = require('path')
+import React from 'react'
 
-import styles from './postSlug.module.css';
+import BlogHero from '@/components/BlogHero'
 
-function BlogPost() {
+import styles from './postSlug.module.css'
+
+async function BlogPost({ params }) {
+  const { postSlug } = params
+
+  const blogPath = path.resolve('./content/', `${postSlug}.mdx`)
+  const rawPost = await fs.readFile(blogPath, 'utf8')
+
+  const {
+    content,
+    frontmatter: { title, publishedOn },
+  } = await compileMDX({
+    source: rawPost,
+    options: { parseFrontmatter: true },
+  })
+
   return (
     <article className={styles.wrapper}>
-      <BlogHero
-        title="Example post!"
-        publishedOn={new Date()}
-      />
-      <div className={styles.page}>
-        <p>This is where the blog post will go!</p>
-        <p>
-          You will need to use <em>MDX</em> to render all of
-          the elements created from the blog post in this
-          spot.
-        </p>
-      </div>
+      <BlogHero title={title} publishedOn={publishedOn} />
+      <div className={styles.page}>{content}</div>
     </article>
-  );
+  )
 }
 
-export default BlogPost;
+export default BlogPost
