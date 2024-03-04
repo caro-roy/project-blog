@@ -5,6 +5,7 @@ import React from 'react'
 import BlogHero from '@/components/BlogHero'
 import { loadBlogPost } from '@/helpers/file-helpers'
 import styles from './postSlug.module.css'
+import CodeSnippet from '@/components/CodeSnippet'
 
 export async function generateMetadata({ params }) {
   const { postSlug } = params
@@ -19,6 +20,10 @@ export async function generateMetadata({ params }) {
   }
 }
 
+const components = {
+  pre: CodeSnippet,
+}
+
 async function BlogPost({ params }) {
   const { postSlug } = params
 
@@ -31,7 +36,7 @@ async function BlogPost({ params }) {
     <article className={styles.wrapper}>
       <BlogHero title={title} publishedOn={publishedOn} />
       <div className={styles.page}>
-        <MDXRemote source={content} />
+        <MDXRemote source={content} components={components} />
       </div>
     </article>
   )
