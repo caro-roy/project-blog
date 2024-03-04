@@ -1,31 +1,38 @@
-import { compileMDX } from 'next-mdx-remote/rsc'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
-import fs from 'fs/promises'
-const path = require('path')
 import React from 'react'
 
 import BlogHero from '@/components/BlogHero'
-
+import { loadBlogPost } from '@/helpers/file-helpers'
 import styles from './postSlug.module.css'
+
+export async function generateMetadata({ params }) {
+  const { postSlug } = params
+
+  const {
+    frontmatter: { title, abstract },
+  } = await loadBlogPost(postSlug)
+
+  return {
+    title,
+    description: abstract,
+  }
+}
 
 async function BlogPost({ params }) {
   const { postSlug } = params
 
-  const postPath = path.resolve('./content/', `${postSlug}.mdx`)
-  const rawPost = await fs.readFile(postPath, 'utf8')
-
   const {
-    content,
     frontmatter: { title, publishedOn },
-  } = await compileMDX({
-    source: rawPost,
-    options: { parseFrontmatter: true },
-  })
+    content,
+  } = await loadBlogPost(postSlug)
 
   return (
     <article className={styles.wrapper}>
       <BlogHero title={title} publishedOn={publishedOn} />
-      <div className={styles.page}>{content}</div>
+      <div className={styles.page}>
+        <MDXRemote source={content} />
+      </div>
     </article>
   )
 }
