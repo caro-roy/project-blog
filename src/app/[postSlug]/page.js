@@ -1,11 +1,12 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
-
 import React from 'react'
 
 import BlogHero from '@/components/BlogHero'
 import { loadBlogPost } from '@/helpers/file-helpers'
 import styles from './postSlug.module.css'
 import CodeSnippet from '@/components/CodeSnippet'
+
+import DivisionGroupsDemo from '@/components/DivisionGroupsDemo'
 
 export async function generateMetadata({ params }) {
   const { postSlug } = params
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }) {
 
 const components = {
   pre: CodeSnippet,
+  DivisionGroupsDemo,
 }
 
 async function BlogPost({ params }) {
