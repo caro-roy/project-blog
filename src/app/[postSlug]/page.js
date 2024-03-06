@@ -7,6 +7,7 @@ import styles from './postSlug.module.css'
 import CodeSnippet from '@/components/CodeSnippet'
 
 import DivisionGroupsDemo from '@/components/DivisionGroupsDemo'
+import CircularColorsDemo from '@/components/CircularColorsDemo'
 
 export async function generateMetadata({ params }) {
   const { postSlug } = params
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }) {
 const components = {
   pre: CodeSnippet,
   DivisionGroupsDemo,
+  CircularColorsDemo,
 }
 
 async function BlogPost({ params }) {
