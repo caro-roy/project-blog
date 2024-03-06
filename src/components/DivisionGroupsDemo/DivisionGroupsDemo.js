@@ -62,11 +62,7 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
 
             {range(remainder).map(index => {
               const layoutId = `${id}-${numOfItems - 1 - index}`
-              return (
-                <motion.div key={layoutId} layoutId={layoutId} className={styles.item}>
-                  {numOfItems - index}
-                </motion.div>
-              )
+              return <motion.div key={layoutId} layoutId={layoutId} className={styles.item} />
             })}
           </div>
         )}
