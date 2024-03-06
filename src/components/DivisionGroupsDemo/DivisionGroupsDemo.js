@@ -55,18 +55,22 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
             ))}
           </div>
         </div>
+
+        {includeRemainderArea && (
+          <div className={styles.remainderArea}>
+            <p className={styles.remainderHeading}>Remainder Area</p>
+
+            {range(remainder).map(index => {
+              const layoutId = `${id}-${numOfItems - 1 - index}`
+              return (
+                <motion.div key={layoutId} layoutId={layoutId} className={styles.item}>
+                  {numOfItems - index}
+                </motion.div>
+              )
+            })}
+          </div>
+        )}
       </LayoutGroup>
-
-      {includeRemainderArea && (
-        <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>Remainder Area</p>
-
-          {range(remainder).map(index => {
-            return <div key={index} className={styles.item} />
-          })}
-        </div>
-      )}
-
       <Equation dividend={numOfItems} divisor={numOfGroups} remainder={remainder} />
     </Card>
   )
